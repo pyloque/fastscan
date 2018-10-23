@@ -155,9 +155,11 @@ FastScanner.prototype.hits = function hits(content, options) {
 	var offWords = this.search(content, options);
 	var seen = {};
 	for (var i = 0; i < offWords.length; i++) {
-		seed[offWords[1]] = true;
+		var word = offWords[i][1];
+		var count = seen[word] || 0;
+		seen[word] = count + 1
 	}
-	return Object.keys(seed)
+	return seen
 }
 
 FastScanner.prototype.search = function search(content, options) {
