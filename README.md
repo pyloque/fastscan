@@ -4,7 +4,10 @@
 
 ## 安装方法
 ```
+# 安装到当前项目
 npm install --save fastscan
+# 运行单元测试
+npm test
 ```
 
 ## 使用方法
