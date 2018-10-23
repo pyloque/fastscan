@@ -66,17 +66,13 @@ function addWord(root, word) {
 }
 
 function fallbackAll(root) {
-	var curExpands = [root];
+	var curExpands = Object.values(root.next);
 	while (curExpands.length > 0) {
 		var nextExpands = [];
 		for (var i = 0; i < curExpands.length; i++) {
 			var node = curExpands[i];
 			for (var c in node.next) {
 				nextExpands.push(node.next[c]);
-			}
-			// 根节点
-			if (node.back == null) {
-				break;
 			}
 			var parent = node.parent
 			var back = parent.back
@@ -85,11 +81,9 @@ function fallbackAll(root) {
 				continue;
 			}
 			// 匹配父节点的回溯节点的子节点
-			for (var c in back.next) {
-				if (node.val == back.next[c].val) {
-					node.back = back.next[c]
-					break
-				}
+			var child = back.next[c]
+			if(child) {
+				node.back = child
 			}
 		}
 		curExpands = nextExpands
@@ -108,11 +102,9 @@ function fallback(root, word) {
 			continue;
 		}
 		// 匹配父节点的回溯节点的子节点
-		for (var cc in back.next) {
-			if (current.val == back.next[cc].val) {
-				current.back = back.next[cc]
-				break
-			}
+		var child = back.next[current.val]
+		if(child) {
+			current.back = child
 		}
 		current = current.next[c]
 	}

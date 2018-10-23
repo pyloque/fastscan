@@ -102,3 +102,19 @@ describe('猛量单词测试', function () {
         console.log(scanner.search(content, { longest: true }));
     });
 });
+describe('超大型词汇', function () {
+    var words = [];
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < 50000; i++) {
+        var len = Math.floor(Math.random() * 20 + 20)
+        var word = []
+        for(var k=0;k<len;k++) {
+            word.push(chars[Math.floor(Math.random() * chars.length)])
+        }
+        words.push(word.join(''))
+    }
+	var start = new Date().getTime()
+    var scanner = new FastScanner(words)
+	var end = new Date().getTime()
+	console.log("50000 words costs %dms", end - start)
+});
