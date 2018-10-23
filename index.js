@@ -108,9 +108,9 @@ function fallback(root, word) {
 			continue;
 		}
 		// 匹配父节点的回溯节点的子节点
-		for (var c in back.next) {
-			if (current.val == back.next[c].val) {
-				current.back = back.next[c]
+		for (var cc in back.next) {
+			if (current.val == back.next[cc].val) {
+				current.back = back.next[cc]
 				break
 			}
 		}
@@ -138,10 +138,17 @@ function selectLongest(offsetWords) {
 }
 
 FastScanner.prototype.add = function add(word) {
+	word = word.trim()
+	if (word.length == 0) {
+		return
+	}
 	addWord(this.root, word)
+	// var util = require('util')
+	// console.log(util.inspect(this.root, null, 8))
 	fallback(this.root, word)
 }
 
+// 从子节点往上直到根结点，收集单词
 function collect(node) {
 	var word = [];
 	while (node.val != null) {
@@ -149,6 +156,19 @@ function collect(node) {
 		node = node.parent;
 	}
 	return word.join('')
+}
+
+// 定位子节点
+FastScanner.prototype.locate = function locate(word) {
+	var current = this.root.next[word[0]]
+	for (var i = 1; i < word.length; i++) {
+		var c = word[i]
+		current = current.next[c]
+		if(current == null) {
+			break
+		}
+	}
+	return current
 }
 
 FastScanner.prototype.hits = function hits(content, options) {

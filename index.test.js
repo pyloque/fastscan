@@ -61,6 +61,21 @@ describe('测试叠加词汇', function () {
         assert.deepEqual([[3, '习近平好'], [4, '近平'], [11, '习近平'], [12, '近平']], offWords)
     });
 });
+describe('动态增加词汇', function () {
+    it('动态增加别出错', function () {
+        var scanner = new FastScanner(["近平", "习近平", "习近平好"])
+        scanner.add("江泽民")
+        scanner.add("泽民")
+        scanner.add("江泽民好")
+        var node = scanner.locate("江泽民好")
+        assert.equal('好', node.val)
+        assert.equal('民', node.parent.val)
+        assert.equal('泽', node.parent.parent.val)
+        assert.equal('江', node.parent.parent.parent.val)
+        assert.equal('泽', node.parent.parent.back.val)
+        assert.equal('民', node.parent.back.val)
+    });
+});
 describe('猛量单词测试', function () {
     var words = fs.readFileSync("./words.test")
     words = words.toString().split("\n")
@@ -83,7 +98,7 @@ describe('猛量单词测试', function () {
         法轮功起初并没有受批评，但在1996年3月退出中国气功协会后，失去了政府体制的保护。
         `;
         console.log(scanner.search(content));
-        console.log(scanner.search(content, {quick: true}));
-        console.log(scanner.search(content, {longest: true}));
+        console.log(scanner.search(content, { quick: true }));
+        console.log(scanner.search(content, { longest: true }));
     });
 });
