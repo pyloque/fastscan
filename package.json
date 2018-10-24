@@ -1,0 +1,27 @@
+{
+  "name": "fastscan",
+  "version": "1.0.3",
+  "description": "quickly search by ahocorasick algorithm ",
+  "main": "index.min.js",
+  "scripts": {
+    "test": "mocha index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pyloque/fastscan.git"
+  },
+  "keywords": [
+    "ahocorasick",
+    "javascript",
+    "node"
+  ],
+  "author": "qianwp",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/pyloque/fastscan/issues"
+  },
+  "homepage": "https://github.com/pyloque/fastscan#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
