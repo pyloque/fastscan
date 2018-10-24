@@ -2,6 +2,9 @@
 苦于没有找到一个比较合适的敏感词过滤库，所以我自己花了点时间撸了一个。
 它基于广为人知的 ahocorasick 字符串匹配算法，使用原生的 js 实现。
 
+## 演示地址
+[FastScan PlayGround](https://pyloque.github.io/fastscan/)
+
 ## 安装方法
 ```
 # 安装到当前项目
