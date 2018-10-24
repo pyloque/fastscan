@@ -13,27 +13,19 @@
         <el-container>
             <el-main>
                 <el-row :gutter="20">
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-card class="box-card">
-                            <el-input type="textarea" :rows="16" placeholder="请输入词汇列表，用逗号分割" v-model="words">
+                            <el-input type="textarea" :rows="20" placeholder="请输入词汇列表，用逗号分割" v-model="words">
                             </el-input>
                         </el-card>
                         <el-card class="box-card">
-                            <el-card class="box-card">
-                                <el-card class="box-card">
-                                    <el-card class="box-card">
-                                        <el-card class="box-card">
-                                            <img src="images/qrcode.jpg" class="image" />
-                                            <div style="text-align:center">
-                                                <span>微信扫一扫关注「码洞」</span>
-                                            </div>
-                                        </el-card>
-                                    </el-card>
-                                </el-card>
-                            </el-card>
+                            <img src="images/qrcode.jpg" class="image" />
+                            <div style="text-align:center">
+                                <span>微信扫一扫关注「码洞」</span>
+                            </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="16">
+                    <el-col :span="18">
                         <el-card class="box-card">
                             <el-input type="textarea" :rows="16" placeholder="请输入内容" v-model="content">
                             </el-input>
@@ -67,6 +59,8 @@
 
         .image {
             width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
             display: block;
         }
 
