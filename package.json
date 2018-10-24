@@ -1,8 +1,8 @@
 {
   "name": "fastscan",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "quickly search by ahocorasick algorithm ",
-  "main": "index.js",
+  "main": "index.min.js",
   "scripts": {
     "test": "mocha index.test.js"
   },
