@@ -82,7 +82,7 @@ function fallbackAll(root) {
 			}
 			// 匹配父节点的回溯节点的子节点
 			var child = back.next[c]
-			if(child) {
+			if (child) {
 				node.back = child
 			}
 		}
@@ -103,7 +103,7 @@ function fallback(root, word) {
 		}
 		// 匹配父节点的回溯节点的子节点
 		var child = back.next[current.val]
-		if(child) {
+		if (child) {
 			current.back = child
 		}
 		current = current.next[c]
@@ -156,7 +156,7 @@ FastScanner.prototype.locate = function locate(word) {
 	for (var i = 1; i < word.length; i++) {
 		var c = word[i]
 		current = current.next[c]
-		if(current == null) {
+		if (current == null) {
 			break
 		}
 	}
@@ -221,4 +221,6 @@ FastScanner.prototype.search = function search(content, options) {
 	return offWords
 }
 
-module.exports = FastScanner;
+if (typeof module === "object" && module.exports) {
+	module.exports = FastScanner;
+}
