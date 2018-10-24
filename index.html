@@ -15,13 +15,27 @@
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-card class="box-card">
-                            <el-input type="textarea" :rows="30" placeholder="请输入词汇列表，用逗号分割" v-model="words">
+                            <el-input type="textarea" :rows="16" placeholder="请输入词汇列表，用逗号分割" v-model="words">
                             </el-input>
+                        </el-card>
+                        <el-card class="box-card">
+                            <el-card class="box-card">
+                                <el-card class="box-card">
+                                    <el-card class="box-card">
+                                        <el-card class="box-card">
+                                            <img src="images/qrcode.jpg" class="image" />
+                                            <div style="text-align:center">
+                                                <span>微信扫一扫关注「码洞」</span>
+                                            </div>
+                                        </el-card>
+                                    </el-card>
+                                </el-card>
+                            </el-card>
                         </el-card>
                     </el-col>
                     <el-col :span="16">
                         <el-card class="box-card">
-                            <el-input type="textarea" :rows="10" placeholder="请输入内容" v-model="content">
+                            <el-input type="textarea" :rows="16" placeholder="请输入内容" v-model="content">
                             </el-input>
                         </el-card>
                         <el-card class="box-card">
@@ -49,6 +63,21 @@
         .item {
             margin-top: 10px;
             margin-right: 40px;
+        }
+
+        .image {
+            width: 100%;
+            display: block;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+
+        .clearfix:after {
+            clear: both
         }
     </style>
     <script>
