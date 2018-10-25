@@ -133,7 +133,10 @@
             },
             methods: {
                 rebuild: function () {
-                    var words = this.words.replace('，', ',').replace('\\n', ',').split(',')
+                    var words = this.words
+                        .replace(new RegExp('，', 'g'), ',')
+                        .replace(new RegExp('\\n', 'g'), ',')
+                        .split(',')
                     words = words.map(function (word) {
                         return word.trim()
                     }).filter(function (word) {
