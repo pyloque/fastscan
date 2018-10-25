@@ -82,7 +82,7 @@
 					continue;
 				}
 				// 匹配父节点的回溯节点的子节点
-				var child = back.next[c]
+				var child = back.next[node.val]
 				if (child) {
 					node.back = child
 				}
