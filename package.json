@@ -1,6 +1,6 @@
 {
   "name": "fastscan",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "quickly search by ahocorasick algorithm ",
   "main": "index.min.js",
   "scripts": {
