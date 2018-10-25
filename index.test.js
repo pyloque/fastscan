@@ -76,6 +76,39 @@ describe('动态增加词汇', function () {
         assert.equal('民', node.parent.back.val)
     });
 });
+describe('排列组合词汇', function () {
+    it('不许闹出死循环', function () {
+        var seed = 'abcdefg'.split('')
+        function permutator(inputArr) {
+            var results = [];
+
+            function permute(arr, memo) {
+                var cur, memo = memo || [];
+
+                for (var i = 0; i < arr.length; i++) {
+                    cur = arr.splice(i, 1);
+                    if (arr.length === 0) {
+                        results.push(memo.concat(cur));
+                    }
+                    permute(arr.slice(), memo.concat(cur));
+                    arr.splice(i, 0, cur[0]);
+                }
+
+                return results;
+            }
+
+            return permute(inputArr);
+        }
+        var words = permutator(seed)
+        for(var i=0;i<words.length;i++) {
+            words[i] = words[i].join('')
+        }
+        var scanner = new FastScanner(words)
+        for(var i=0;i<words.length;i++) {
+            scanner.search(words[i])
+        }
+    })
+});
 describe('猛量单词测试', function () {
     var words = fs.readFileSync("./words.test")
     words = words.toString().split("\n")
@@ -108,13 +141,13 @@ describe('超大型词汇', function () {
     for (var i = 0; i < 50000; i++) {
         var len = Math.floor(Math.random() * 20 + 20)
         var word = []
-        for(var k=0;k<len;k++) {
+        for (var k = 0; k < len; k++) {
             word.push(chars[Math.floor(Math.random() * chars.length)])
         }
         words.push(word.join(''))
     }
-	var start = new Date().getTime()
+    var start = new Date().getTime()
     var scanner = new FastScanner(words)
-	var end = new Date().getTime()
-	console.log("50000 words costs %dms", end - start)
+    var end = new Date().getTime()
+    console.log("50000 words costs %dms", end - start)
 });
