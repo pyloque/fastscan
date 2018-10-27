@@ -77,14 +77,14 @@
 				}
 				var parent = node.parent
 				var back = parent.back
-				// 第一层节点也谈不上回溯
-				if (back == null) {
-					continue;
-				}
-				// 匹配父节点的回溯节点的子节点
-				var child = back.next[node.val]
-				if (child) {
-					node.back = child
+				while(back != null) {
+					// 匹配父节点的回溯节点的子节点
+					var child = back.next[node.val]
+					if (child) {
+						node.back = child
+						break
+					}
+					back = back.back
 				}
 			}
 			curExpands = nextExpands
@@ -179,16 +179,15 @@
 		var offWords = [];
 		var current = this.root;
 		options = options || {}
-		for (var i = 0; i < content.length;) {
+		for (var i = 0; i < content.length;i++) {
 			var c = content[i];
 			var next = current.next[c];
 			if (next) {
 				current = next;
-				i++;
 				// 收集匹配的词汇
-				if (next.accept) {
+				if (current.accept) {
 					var word = collect(current)
-					offWords.push([i - word.length, word]);
+					offWords.push([i - word.length + 1, word]);
 					// 只选第一个词
 					if (options.quick) {
 						return offWords
@@ -197,14 +196,12 @@
 				continue;
 			}
 			var back = current.back;
-			if (back == null) {
-				i++;
+			if (back == null || back == this.root) {
+				current = this.root
 				continue;
 			}
-			// 回溯
-			var delta = current.depth - back.depth - 1;
+			// 跳跃
 			current = back;
-			i -= delta;
 			// 收集匹配的词汇
 			if (current.accept) {
 				var word = collect(current)
