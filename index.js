@@ -11,7 +11,7 @@
 		var root = {
 			next: {}, // 子节点指针
 			val: null, // 当前节点的字符，null表示根节点
-			back: null, // 回溯指针，也称失败指针
+			back: null, // 跳跃指针，也称失败指针
 			parent: null, // 父节点指针,
 			depth: 0, // 节点深度
 			accept: false // 是否形成了一个完整的词汇，中间节点也可能为true
@@ -78,12 +78,12 @@
 				var parent = node.parent
 				var back = parent.back
 				while(back != null) {
-					// 匹配父节点的回溯节点的子节点
+					// 匹配父节点的跳跃节点的子节点
 					var child = back.next[node.val]
 					if (child) {
 						node.back = child
 						break
-					}
+					} 
 					back = back.back
 				}
 			}
@@ -97,15 +97,14 @@
 			var c = word[i]
 			var parent = current.parent
 			var back = parent.back
-			// 第一层节点也谈不上回溯
-			if (back == null) {
-				current = current.next[c]
-				continue;
-			}
-			// 匹配父节点的回溯节点的子节点
-			var child = back.next[current.val]
-			if (child) {
-				current.back = child
+			while (back != null) {
+				// 匹配父节点的跳跃节点的子节点
+				var child = back.next[current.val]
+				if (child) {
+					current.back = child
+					break
+				}
+				back = back.back
 			}
 			current = current.next[c]
 		}
@@ -136,8 +135,6 @@
 			return
 		}
 		addWord(this.root, word)
-		// var util = require('util')
-		// console.log(util.inspect(this.root, null, 8))
 		fallback(this.root, word)
 	}
 
@@ -182,7 +179,26 @@
 		for (var i = 0; i < content.length;i++) {
 			var c = content[i];
 			var next = current.next[c];
-			if (next) {
+			if(!next) {
+				// 递归匹配跳跃节点的子节点
+				var back = current.back
+				while(back != null) {
+					if(back.accept) {
+						var word = collect(back)
+						offWords.push([i - word.length, word]);
+						// 只选第一个词
+						if (options.quick) {
+							return offWords
+						}
+					}
+					next = back.next[c]
+					if(next) {
+						break
+					}
+					back = back.back
+				}
+			}
+			if(next) {
 				current = next;
 				// 收集匹配的词汇
 				if (current.accept) {
@@ -193,24 +209,10 @@
 						return offWords
 					}
 				}
-				continue;
+				continue
 			}
-			var back = current.back;
-			if (back == null || back == this.root) {
-				current = this.root
-				continue;
-			}
-			// 跳跃
-			current = back;
-			// 收集匹配的词汇
-			if (current.accept) {
-				var word = collect(current)
-				offWords.push([i - word.length, word]);
-				// 只选第一个词
-				if (options.quick) {
-					return offWords
-				}
-			}
+			// 重置
+			current = this.root
 		}
 		// 同一个位置选最长的
 		if (options.longest) {
