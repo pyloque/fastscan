@@ -48,18 +48,25 @@ describe('测试叠加词汇', function () {
         var scanner = new FastScanner(["近平", "习近平棒", "习近平好"])
         var content = "习近平拽"
         var offWords = scanner.search(content)
-		console.log(offWords)
+        console.log(offWords)
         assert.deepEqual([[1, '近平']], offWords)
     });
     it('扫的狠一点', function () {
         var scanner = new FastScanner(["近平", "习近平", "习近平好"])
         var content = "我不说习近平好，也不是习近平坏"
         var offWords = scanner.search(content)
-        assert.deepEqual([[3, '习近平'], [3, '习近平好'], [11, '习近平'], [12, '近平']], offWords)
+        assert.deepEqual([[3, '习近平'], [4, '近平'], [3, '习近平好'], [11, '习近平'], [12, '近平']], offWords)
         var offWords = scanner.search(content, { quick: true })
         assert.deepEqual([[3, '习近平']], offWords)
         var offWords = scanner.search(content, { longest: true })
-        assert.deepEqual([[3, '习近平好'], [11, '习近平'], [12, '近平']], offWords)
+        assert.deepEqual([[3, '习近平好'], [4, '近平'], [11, '习近平'], [12, '近平']], offWords)
+    });
+});
+describe('wikipedia demo', function () {
+    it('一个都不能少', function () {
+        var scanner = new FastScanner(["a", "ab", "bab", "bc", "bca", "c", "caa"])
+        var offWords = scanner.search("abccab")
+        assert.deepEqual([[0, "a"], [0, "ab"], [1, "bc"], [2, "c"], [3, "c"], [4, "a"], [4, "ab"]], offWords)
     });
 });
 describe('动态增加词汇', function () {
@@ -101,11 +108,11 @@ describe('排列组合词汇', function () {
             return permute(inputArr);
         }
         var words = permutator(seed)
-        for(var i=0;i<words.length;i++) {
+        for (var i = 0; i < words.length; i++) {
             words[i] = words[i].join('')
         }
         var scanner = new FastScanner(words)
-        for(var i=0;i<words.length;i++) {
+        for (var i = 0; i < words.length; i++) {
             scanner.search(words[i])
         }
     })
