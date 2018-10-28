@@ -13,7 +13,6 @@
 			val: null, // 当前节点的字符，null表示根节点
 			back: null, // 跳跃指针，也称失败指针
 			parent: null, // 父节点指针,
-			depth: 0, // 节点深度
 			accept: false // 是否形成了一个完整的词汇，中间节点也可能为true
 		}
 		// make trie tree
@@ -57,8 +56,7 @@
 					val: c,
 					accept: false,
 					back: root,
-					parent: current,
-					depth: current.depth + 1
+					parent: current
 				}
 			}
 			current = current.next[c];
@@ -77,13 +75,13 @@
 				}
 				var parent = node.parent
 				var back = parent.back
-				while(back != null) {
+				while (back != null) {
 					// 匹配父节点的跳跃节点的子节点
 					var child = back.next[node.val]
 					if (child) {
 						node.back = child
 						break
-					} 
+					}
 					back = back.back
 				}
 			}
@@ -176,39 +174,35 @@
 		var offWords = [];
 		var current = this.root;
 		options = options || {}
-		for (var i = 0; i < content.length;i++) {
+		for (var i = 0; i < content.length; i++) {
 			var c = content[i];
 			var next = current.next[c];
-			if(!next) {
-				// 递归匹配跳跃节点的子节点
+			if (!next) {
+				// 当前分支上找不到，跳到其它分支上找
 				var back = current.back
-				while(back != null) {
-					if(back.accept) {
-						var word = collect(back)
-						offWords.push([i - word.length, word]);
-						// 只选第一个词
-						if (options.quick) {
-							return offWords
-						}
-					}
+				while (back != null) {
 					next = back.next[c]
-					if(next) {
+					if (next) {
 						break
 					}
 					back = back.back
 				}
 			}
-			if(next) {
-				current = next;
-				// 收集匹配的词汇
-				if (current.accept) {
-					var word = collect(current)
-					offWords.push([i - word.length + 1, word]);
-					// 只选第一个词
-					if (options.quick) {
-						return offWords
+			if (next) {
+				var back = next;
+				do {
+					// 收集匹配的词汇
+					if (back.accept) {
+						var word = collect(back)
+						offWords.push([i - word.length + 1, word]);
+						// 只选第一个词
+						if (options.quick) {
+							return offWords
+						}
 					}
-				}
+					back = back.back
+				} while (back != this.root);
+				current = next;
 				continue
 			}
 			// 重置

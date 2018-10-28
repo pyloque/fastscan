@@ -59,11 +59,11 @@ options = {quick: false, longest: false}
 
 字数|耗时
 ---|----
-| 20000 words   | 12ms   | 
-| 40000 words   | 28ms   | 
-| 60000 words   | 35ms   | 
-| 80000 words   | 49ms   | 
-| 100000 words   | 51ms   | 
+| 20000 words   | 14ms   | 
+| 40000 words   | 32ms   | 
+| 60000 words   | 67ms   | 
+| 80000 words   | 71ms   | 
+| 100000 words   | 84ms   | 
 
 fastscan 可以做到以迅雷不及掩耳的速度扫遍一幅 10w 字的长文，10w 大概就是一部中篇小说的长度了。如果你要扫百万字的长篇小说，那还是建议你分章分节来扫吧。
 
